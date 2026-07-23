@@ -5,6 +5,7 @@ public record DeskResponse(
         String code,
         Integer floor,
         boolean hasMonitor,
-        boolean active
+        boolean active,
+        boolean available
 ) {
 }

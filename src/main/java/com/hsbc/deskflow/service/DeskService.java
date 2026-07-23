@@ -38,6 +38,7 @@ public class DeskService {
                 desk.getCode(),
                 desk.getFloor(),
                 desk.isHasMonitor(),
+                desk.isActive(),
                 desk.isActive()
         );
     }

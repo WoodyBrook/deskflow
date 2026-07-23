@@ -39,7 +39,7 @@ docker compose down
 
 - `GET /api/health`
 - `GET /api/desks?floor=&hasMonitor=`
-- `GET /api/desks/available?date=YYYY-MM-DD&floor=`
+- `GET /api/desks/available?date=YYYY-MM-DD&floor=` — all active desks for the date, each with `available` true/false
 - `POST /api/login`
 - `POST /api/bookings`
 - `GET /api/bookings?date=YYYY-MM-DD`

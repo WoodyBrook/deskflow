@@ -142,15 +142,18 @@ public class BookingService {
         }
 
         return deskRepository.findByActiveTrue().stream()
-                .filter(desk -> !bookedDeskIds.contains(desk.getId()))
                 .filter(desk -> floor == null || floor.equals(desk.getFloor()))
-                .map(desk -> new DeskResponse(
-                        desk.getId(),
-                        desk.getCode(),
-                        desk.getFloor(),
-                        desk.isHasMonitor(),
-                        desk.isActive()
-                ))
+                .map(desk -> {
+                    boolean available = !bookedDeskIds.contains(desk.getId());
+                    return new DeskResponse(
+                            desk.getId(),
+                            desk.getCode(),
+                            desk.getFloor(),
+                            desk.isHasMonitor(),
+                            desk.isActive(),
+                            available
+                    );
+                })
                 .toList();
     }
 
