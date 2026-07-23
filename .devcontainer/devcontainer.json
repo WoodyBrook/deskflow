@@ -12,7 +12,8 @@
     "ghcr.io/devcontainers/features/java:1": {
       "version": "17",
       "installMaven": true
-    }
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "forwardPorts": [8080],
   "portsAttributes": {
@@ -23,7 +24,7 @@
     }
   },
   "postCreateCommand": "docker compose pull || true",
-  "postStartCommand": "bash -lc 'until docker info >/dev/null 2>&1; do sleep 2; done; docker compose up -d --build'",
+  "postStartCommand": "bash .devcontainer/post-start.sh",
   "customizations": {
     "vscode": {
       "extensions": ["vscjava.vscode-java-pack"]
