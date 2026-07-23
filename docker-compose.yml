@@ -1,0 +1,35 @@
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: deskflow
+      MYSQL_USER: deskflow
+      MYSQL_PASSWORD: deskflow
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      # Keep DB local-only; do not expose MySQL to the LAN/internet
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - deskflow_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  api:
+    build: .
+    ports:
+      # Bind all interfaces so LAN / other devices can reach the API
+      - "0.0.0.0:8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/deskflow?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: deskflow
+      SPRING_DATASOURCE_PASSWORD: deskflow
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  deskflow_mysql_data:
