@@ -3,13 +3,24 @@
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/sshd:1": {
+      "version": "latest"
+    },
     "ghcr.io/devcontainers/features/java:1": {
       "version": "17",
       "installMaven": true
     }
   },
-  "forwardPorts": [8080, 3306],
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": {
+      "label": "DeskFlow UI / API",
+      "onAutoForward": "notify",
+      "visibility": "public"
+    }
+  },
   "postCreateCommand": "docker compose pull || true",
+  "postStartCommand": "bash -lc 'docker info >/dev/null 2>&1 && docker compose up -d --build || true'",
   "customizations": {
     "vscode": {
       "extensions": ["vscjava.vscode-java-pack"]
